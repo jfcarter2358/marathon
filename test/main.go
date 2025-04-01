@@ -53,12 +53,8 @@ panic(fmt.Errorf("this is a dummy error with context value %s", val))`,
 		},
 	}
 
-	// not yet used
-	resourceTypes := make([]marathon.ResourceType, 0)
-	resources := make([]marathon.Resource, 0)
-
 	// setup marathon
-	if err := marathon.Init(workflow, resources, resourceTypes); err != nil {
+	if err := marathon.Init(workflow); err != nil {
 		slog.Error("Could not setup workflow", "error", err)
 		return
 	}

@@ -78,10 +78,8 @@ var workflow Workflow
 // var resources []Resource
 // var resourceTypes []ResourceType
 
-func Init(w Workflow, rs []Resource, rts []ResourceType) error {
+func Init(w Workflow) error {
 	workflow = w
-	// resources = rs
-	// resourceTypes = rts
 
 	// initialize variables
 	Statuses.Init()

@@ -35,26 +35,9 @@ type Step struct {
 }
 
 type Workflow struct {
-	Name            string `json:"name" yaml:"name"`
-	Steps           []Step `json:"steps" yaml:"steps"`
-	stepMap         map[string]Step
-	ResourceTypes   []ResourceType `json:"resource_types" yaml:"resource_types"`
-	resourceTypeMap map[string]ResourceType
-	Resources       []Resource `json:"resources" yaml:"resources"`
-	resourceMap     map[string]Resource
-}
-
-type ResourceType struct {
-	Name         string `json:"name" yaml:"name"`
-	Source       string `json:"source" yaml:"source"`
-	Language     string `json:"language" yaml:"language"`
-	Requirements string `json:"requirements" yaml:"requirements"`
-}
-
-type Resource struct {
-	Name string            `json:"name" yaml:"name"`
-	Args map[string]string `json:"args" yaml:"args"`
-	Kind string            `json:"kind" yaml:"kind"`
+	Name    string `json:"name" yaml:"name"`
+	Steps   []Step `json:"steps" yaml:"steps"`
+	stepMap map[string]Step
 }
 
 type State struct {
@@ -182,7 +165,7 @@ func (s *Step) Execute(runID, dirPath string, emitFunc func(string, string, stri
 // Update the state according to the provided emission function
 func (s *State) Update(emitFunc EmitFunc) {
 	if err := emitFunc(s.Step, s.RunID, s.Status, s.Output); err != nil {
-		slog.Error("Could not execute emit function", "step", s.Step, "runID", s.RunID, "status", s.Status, "output", s.Output)
+		slog.Error("Could not execute emit function", "error", err, "step", s.Step, "runID", s.RunID, "status", s.Status, "output", s.Output)
 	}
 	slog.Debug("Updated state", "step", s.Step, "runID", s.RunID, "status", s.Status, "output", s.Output)
 	Statuses.Set(s.Step, s.Status)
